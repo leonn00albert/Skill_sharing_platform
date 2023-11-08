@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ course.name }}</h1>
+    <p>{{ course.description }}</p>
+
+    <h2>Sections</h2>
+    <ul>
+        {% for section in sections %}
+            <li>{{ section.name }}</li>
+            <p>{{ section.content }}</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

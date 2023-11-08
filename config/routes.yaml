@@ -3,3 +3,22 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+course_new:
+    path: '/course/new'
+    controller: App\Controller\CourseController::create
+courses_list:
+    path: '/courses'
+    controller: App\Controller\CourseController::list
+
+course_update:
+    path: '/course/{id}/update'
+    controller: App\Controller\CourseController::update
+course_view:
+    path: '/course/{id}'
+    controller: App\Controller\CourseController::view
+course_delete:
+    path: '/course/{id}/delete'
+    controller: App\Controller\CourseController::delete
+section_new:
+    path: '/section/new'
+    controller: App\Controller\SectionController::new
