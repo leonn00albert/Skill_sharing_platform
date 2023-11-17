@@ -37,19 +37,25 @@ class CourseController extends AbstractController
     }
     public function create(Request $request, EntityManagerInterface $entityManager)
     {
+        $user = $this->getUser(); 
+
+        if (!$user) {
+         
+        }
+
         $course = new Course();
         $form = $this->createForm(CourseType::class, $course);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $course->setTeacher($user);
             $entityManager->persist($course);
             $entityManager->flush();
 
             $this->addFlash('success', 'Course created successfully');
 
-            return $this->redirectToRoute('/course');
+            return $this->redirectToRoute('/teacher/courses');
         }
 
         return $this->render('course/new.html.twig', [
@@ -68,5 +74,46 @@ class CourseController extends AbstractController
             'course' => $course,
             'sections' => $sections,
         ]);
+    }
+
+    public function edit(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $course = $entityManager->getRepository(Course::class)->find($id);
+
+        if (!$course) {
+            throw $this->createNotFoundException('Course not found');
+        }
+
+        $form = $this->createForm(CourseType::class, $course);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Course updated successfully.');
+
+            return $this->redirectToRoute('teacher_courses');
+        }
+
+        return $this->render('course/edit.html.twig', [
+            'form' => $form->createView(),
+            'course' => $course,
+        ]);
+    }
+
+    public function delete($id , EntityManagerInterface $entityManager): Response
+    {
+        $course = $entityManager->getRepository(Course::class)->find($id);
+
+        if (!$course) {
+            throw $this->createNotFoundException('Course not found');
+        }
+        $entityManager->remove($course);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Course deleted successfully.');
+
+        return $this->redirectToRoute('teacher_courses');
     }
 }

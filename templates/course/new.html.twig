@@ -4,9 +4,29 @@
 
 {% block body %}
     <h1>Create a New Course</h1>
+    <div class="">
+        <a href="{{ path('teacher_courses') }}" class="ui primary button  m-3">Back</a>
+    </div>
+    <div class="ui form">
+        {{ form_start(form) }}
+        
+        <div class="field">
+            {{ form_label(form.title) }}
+            <div class="ui input">
+                {{ form_widget(form.title, {'attr': {'placeholder': 'Enter Title'}}) }}
+            </div>
+        </div>
+        
+        <div class="field">
+            {{ form_label(form.description) }}
+            <div class="ui input">
+                {{ form_widget(form.description, {'attr': {'placeholder': 'Enter Description'}}) }}
+            </div>
+        </div>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Create</button>
-    {{ form_end(form) }}
+
+        <button type="submit" class="ui primary button">Create</button>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

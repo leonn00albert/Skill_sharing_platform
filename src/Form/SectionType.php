@@ -14,11 +14,11 @@ class SectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('name')
+        ->add('title')
         ->add('content')
-        ->add('course_id', EntityType::class, [
+        ->add('course', EntityType::class, [
             'class' => Course::class,
-            'choice_label' => 'name',
+            'choice_label' => 'title',
         ]);
     }
 

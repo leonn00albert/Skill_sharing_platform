@@ -4,14 +4,10 @@ controllers:
         namespace: App\Controller
     type: attribute
 course_new:
-    path: '/course/new'
+    path: '/teacher/course/new'
     controller: App\Controller\CourseController::create
-courses_list:
-    path: '/courses'
-    controller: App\Controller\CourseController::list
-
 course_update:
-    path: '/course/{id}/update'
+    path: 'teacher/course/{id}/update'
     controller: App\Controller\CourseController::update
 course_view:
     path: '/course/{id}'
@@ -20,5 +16,20 @@ course_delete:
     path: '/course/{id}/delete'
     controller: App\Controller\CourseController::delete
 section_new:
-    path: '/section/new'
+    path: '/teacher/section/new'
     controller: App\Controller\SectionController::new
+course_list:
+    path: '/courses'
+    controller: App\Controller\EnrollmentController::listCourses
+
+enroll_course:
+    path: '/enroll/{courseId}'
+    controller: App\Controller\EnrollmentController::enrollCourse
+
+edit_course:
+    path: '/teacher/course/{id}/edit'
+    controller: 'App\Controller\CourseController::edit'
+    
+delete_course:
+    path: '/teacher/course/{id}/delete'
+    controller: 'App\Controller\CourseController::delete'

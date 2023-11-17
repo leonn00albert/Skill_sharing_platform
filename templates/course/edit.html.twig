@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Course - {{ course.title }}{% endblock %}
+
+{% block body %}
+    <h1>Update Course - {{ course.title }}</h1>
+    <div class="">
+        <a href="{{ path('teacher_courses') }}" class="ui primary button  m-3">Back</a>
+    </div>
+    <div class="ui form">
+        {{ form_start(form, {'action': path('edit_course', {'id': course.id}), 'method': 'POST'}) }}
+
+        <div class="field">
+            {{ form_label(form.title) }}
+            <div class="ui input">
+                {{ form_widget(form.title, {'attr': {'placeholder': 'Enter Title'}}) }}
+            </div>
+        </div>
+
+        <div class="field">
+            {{ form_label(form.description) }}
+            <div class="ui input">
+                {{ form_widget(form.description, {'attr': {'placeholder': 'Enter Description'}}) }}
+            </div>
+        </div>
+
+
+        <button type="submit" class="ui primary button">Update</button>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

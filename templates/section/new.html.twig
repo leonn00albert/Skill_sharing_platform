@@ -3,12 +3,30 @@
 {% block title %}Create a New Section{% endblock %}
 
 {% block body %}
-    <h1>Create a New Section</h1>
+    <h1 >Create a New Section</h1>
+    <div class="">
+        <a href="{{ path('teacher_courses') }}" class="ui primary button  m-3">Back</a>
+    </div>
+    <div class="ui form">
+        {{ form_start(form) }}
 
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.content) }}
-    {{ form_row(form.course_id) }}
-    <button type="submit" class="btn btn-primary">Create</button>
-    {{ form_end(form) }}
+        <div class="field">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title, {'attr': {'class': 'ui input', 'placeholder': 'Enter Title'}}) }}
+        </div>
+
+        <div class="field">
+            {{ form_label(form.content) }}
+            {{ form_widget(form.content, {'attr': {'class': 'ui input', 'placeholder': 'Enter Content'}}) }}
+        </div>
+
+        <div class="field">
+            {{ form_label(form.course) }}
+            {{ form_widget(form.course, {'attr': {'class': 'ui input', 'placeholder': 'Select Course'}}) }}
+        </div>
+
+        <button type="submit" class="ui primary button">Create</button>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

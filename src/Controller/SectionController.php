@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CompletedSections;
 use App\Entity\Section;
 use App\Form\SectionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,9 +21,6 @@ class SectionController extends AbstractController
         ]);
     }
 
-    /**
- * @Route("/sections/new", name="section_new")
- */
 public function new(Request $request,EntityManagerInterface $entityManager)
 {
     $section = new Section();
@@ -40,11 +38,38 @@ public function new(Request $request,EntityManagerInterface $entityManager)
 
         $this->addFlash('success', 'Section created successfully');
 
-        return $this->redirectToRoute('section_new');
+        return $this->redirectToRoute('teacher_courses');
     }
 
     return $this->render('section/new.html.twig', [
         'form' => $form->createView(),
     ]);
 }
+
+
+    #[Route('/section/{id}', name: 'section_view')]
+
+    public function view(Section $section)
+    {
+        return $this->render('section/view.html.twig', [
+            'section' => $section,
+        
+        ]);
+    }
+
+    #[Route('/section/{id}/complete', name: 'complete_section')]
+
+    public function CompleteSection(EntityManagerInterface $entityManager,$id): Response
+    {
+        $section = $entityManager->getRepository(Section::class)->find($id);
+        $completed_section = new CompletedSections();
+        $completed_section->setStudent($this->getUser());
+        $completed_section->setSection($section);
+        $entityManager->persist($completed_section);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Section created successfully');
+
+        return $this->redirectToRoute('section_view',['id' => $id]);
+    }
 }

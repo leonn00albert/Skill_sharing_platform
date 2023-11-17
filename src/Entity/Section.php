@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Entity;
-use App\Entity\Course;
+
 use App\Repository\SectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SectionRepository::class)]
@@ -13,29 +15,49 @@ class Section
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\Column(length: 1000000, nullable: true)]
-    private ?string $content = null;
-
     #[ORM\ManyToOne(inversedBy: 'sections')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Course $course_id = null;
+    private ?Course $course = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(length: 100000)]
+    private ?string $content = null;
+
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: CompletedSections::class)]
+    private Collection $completedSections;
+
+    public function __construct()
+    {
+        $this->completedSections = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getCourse(): ?Course
     {
-        return $this->name;
+        return $this->course;
     }
 
-    public function setName(string $name): static
+    public function setCourse(?Course $course): static
     {
-        $this->name = $name;
+        $this->course = $course;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -45,21 +67,39 @@ class Section
         return $this->content;
     }
 
-    public function setContent(?string $content): static
+    public function setContent(string $content): static
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function getCourseId(): ?Course
+    /**
+     * @return Collection<int, CompletedSections>
+     */
+    public function getCompletedSections(): Collection
     {
-        return $this->course_id;
+        return $this->completedSections;
     }
 
-    public function setCourseId(?Course $course_id): static
+    public function addCompletedSection(CompletedSections $completedSection): static
     {
-        $this->course_id = $course_id;
+        if (!$this->completedSections->contains($completedSection)) {
+            $this->completedSections->add($completedSection);
+            $completedSection->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompletedSection(CompletedSections $completedSection): static
+    {
+        if ($this->completedSections->removeElement($completedSection)) {
+            // set the owning side to null (unless already changed)
+            if ($completedSection->getSection() === $this) {
+                $completedSection->setSection(null);
+            }
+        }
 
         return $this;
     }

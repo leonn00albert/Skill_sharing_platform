@@ -29,12 +29,11 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $user->setRoles($form->get('roles')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('_profiler_home');
+        
+            return $this->redirectToRoute('course_list');
         }
 
         return $this->render('registration/register.html.twig', [

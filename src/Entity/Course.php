@@ -15,21 +15,26 @@ class Course
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'courses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $teacher = null;
+
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $title = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $instructor_id = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 10000)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'course_id', targetEntity: Section::class)]
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Section::class)]
     private Collection $sections;
+
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Enrollment::class)]
+    private Collection $enrollments;
 
     public function __construct()
     {
         $this->sections = new ArrayCollection();
+        $this->enrollments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -37,26 +42,26 @@ class Course
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTeacher(): ?User
     {
-        return $this->name;
+        return $this->teacher;
     }
 
-    public function setName(string $name): static
+    public function setTeacher(?User $teacher): static
     {
-        $this->name = $name;
+        $this->teacher = $teacher;
 
         return $this;
     }
 
-    public function getInstructorId(): ?int
+    public function getTitle(): ?string
     {
-        return $this->instructor_id;
+        return $this->title;
     }
 
-    public function setInstructorId(?int $instructor_id): static
+    public function setTitle(string $title): static
     {
-        $this->instructor_id = $instructor_id;
+        $this->title = $title;
 
         return $this;
     }
@@ -66,7 +71,7 @@ class Course
         return $this->description;
     }
 
-    public function setDescription(?string $description): static
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
@@ -80,12 +85,19 @@ class Course
     {
         return $this->sections;
     }
+    /**
+     * @return int
+     */
+    public function getSectionCount(): int
+    {
+        return count($this->sections);
+    }
 
     public function addSection(Section $section): static
     {
         if (!$this->sections->contains($section)) {
             $this->sections->add($section);
-            $section->setCourseId($this);
+            $section->setCourse($this);
         }
 
         return $this;
@@ -95,11 +107,42 @@ class Course
     {
         if ($this->sections->removeElement($section)) {
             // set the owning side to null (unless already changed)
-            if ($section->getCourseId() === $this) {
-                $section->setCourseId(null);
+            if ($section->getCourse() === $this) {
+                $section->setCourse(null);
             }
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Enrollment>
+     */
+    public function getEnrollments(): Collection
+    {
+        return $this->enrollments;
+    }
+
+    public function addEnrollment(Enrollment $enrollment): static
+    {
+        if (!$this->enrollments->contains($enrollment)) {
+            $this->enrollments->add($enrollment);
+            $enrollment->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnrollment(Enrollment $enrollment): static
+    {
+        if ($this->enrollments->removeElement($enrollment)) {
+            // set the owning side to null (unless already changed)
+            if ($enrollment->getCourse() === $this) {
+                $enrollment->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
