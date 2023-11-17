@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ section.title }}</h1>
+    <p>{{ section.content }}</p>
+    {% if app.user.hasCompleted(section) %}
+        <p>You have completed this section</p>
+    {% else %}
+                <a href="{{ path('complete_section', {'id': section.id}) }}" class="btn btn-primary">Complete</a>
+     {% endif %}
+ 
+{% endblock %}

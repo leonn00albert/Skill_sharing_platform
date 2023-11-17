@@ -1,19 +1,38 @@
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h1 class="ui header">Register</h1>
 
-    {{ form_errors(registrationForm) }}
+            <form class="ui form" method="post">
+                {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+                <div class="field">
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'ui input'}}) }}
+                </div>
+
+                <div class="field">
+                    {{ form_label(registrationForm.plainPassword, 'Password') }}
+                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'ui input'}}) }}
+                </div>
+
+                <div class="field">
+             {{ form_row(registrationForm.roles, {
+            label: 'Role'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+     
+
+                <button type="submit" class="ui primary button">Register</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
+

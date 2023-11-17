@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of Courses{% endblock %}
+
+{% block body %}
+    <h1>List of Courses</h1>
+
+    <div class="ui cards">
+        {% for course in courses %}
+            <div class="card">
+                <div class="content">
+                    <div class="header">{{ course.title }}</div>
+                    <div class="description">{{ course.description }}</div>
+                </div>
+                <div class="extra content">
+                    <div class="ui three buttons">
+                        <a href="{{ path('course_view', {'id': course.id}) }}" class="ui primary button">View</a>
+                        <a href="{{ path('course_update', {'id': course.id}) }}" class="ui primary button">Update</a>
+                        <a href="{{ path('course_delete', {'id': course.id}) }}" class="ui negative button">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('course_new') }}" class="ui green button">Create New Course</a>
+{% endblock %}

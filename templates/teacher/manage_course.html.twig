@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block body %}
+    <h1>Manage Course</h1>
+    <div class="">
+        <a href="{{ path('teacher_courses') }}" class="ui primary button  m-3">Back</a>
+    </div>
+    <h1>{{ course.title }}</h1>
+    
+    <p>{{ course.description }}</p>
+    
+    {% if app.user.isEnrolled(course) %}
+        <h2>Sections</h2>
+        <div class="ui cards">
+            {% if sections is not empty %}
+                {% for section in sections %}
+                    <div class="card">
+                        <div class="content">
+                            <div class="header">{{ section.title }}</div>
+                            <div class="meta">
+                                <span class="ui blue label">Section ID: {{ section.id }}</span>
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <a href="{{ path('section_view', {'id': section.id}) }}" class="ui primary button">View</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No Sections found.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
+    {% endif %}
+
+    <h2>Student Enrollments</h2>
+    
+    {% if enrollments is not empty %}
+        <div class="ui list">
+            {% for enrollment in enrollments %}
+                <div class="item">
+                    <i class="user icon"></i>
+                    <div class="content">
+                        {{ enrollment.student.email }}
+                        <p>Progress: {{ enrollment.getProgress }}% ({{ enrollment.completed_sections_count }} / {{ enrollment.sections_count }})</p>
+                        {% if enrollment.completed_enrollment %}
+                            <span class="ui green label">Completed</span>
+                        {% else %}
+                            <span class="ui blue label">In Progress</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No enrollments found.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of Courses{% endblock %}
+
+{% block body %}
+    <h1 class="ui header">List of Courses</h1>
+    
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p class="ui message">Welcome, {{ app.user.email }}!</p>
+    {% endif %}
+    
+    {% for course in courses %}
+        <div class="ui segment">
+            <h2 class="ui header">{{ course.title }}</h2>
+            <p>{{ course.description }}</p>
+            
+            {% if app.user.isEnrolled(course) %}
+                <p class="ui positive message">You are already enrolled in this course.</p>
+            {% else %}
+                <a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
+            {% endif %}
+        </div>
+        <div class="ui divider"></div>
+    {% endfor %}
+{% endblock %}

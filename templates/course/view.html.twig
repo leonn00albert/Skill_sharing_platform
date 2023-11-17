@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block body %}
+    <h1 class="ui header">{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+    
+    {% if app.user.isEnrolled(course) %}
+        <h2 class="ui header">Sections</h2>
+        <div class="ui feed">
+            {% if sections is not empty %}
+                {% for section in sections %}
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                {{ section.title }}
+                                <a href="{{ path('section_view', {'id': section.id}) }}" class="ui primary button">View</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No Sections found.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
+    {% endif %}
+{% endblock %}
