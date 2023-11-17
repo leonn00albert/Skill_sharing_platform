@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}List of Courses{% endblock %}
-
 {% block body %}
     <h1>List of Courses</h1>
 
     <div class="ui cards">
         {% for course in courses %}
             <div class="card">
+                {% if course.image %}
+                    <img class="ui image" src="{{ asset('uploads/courses/' ~ course.image) }}" alt="{{ course.title }} Image">
+                {% endif %}
                 <div class="content">
                     <div class="header">{{ course.title }}</div>
                     <div class="description">{{ course.description }}</div>

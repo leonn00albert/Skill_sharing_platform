@@ -11,6 +11,9 @@
         <div class="ui cards">
             {% for course in courses %}
                 <div class="card">
+                    {% if course.image %}
+                    <img class="ui image" src="{{ asset('uploads/courses/' ~ course.image) }}" alt="{{ course.title }} Image">
+                {% endif %}
                     <div class="content">
                         <div class="header">{{ course.title }}</div>
                         <div class="meta">Course ID: {{ course.id }}</div>

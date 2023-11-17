@@ -6,7 +6,7 @@ use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
 {
@@ -30,6 +30,18 @@ class Course
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Enrollment::class)]
     private Collection $enrollments;
+    #[ORM\Column(length: 255)]
+
+
+    private $image;
+
+    #[Assert\File(
+        mimeTypes: ["image/jpeg", "image/png"],
+        mimeTypesMessage: "Please upload a valid JPEG or PNG image"
+    )]
+    #[ORM\Column(length: 255)]
+
+    private $imageFile;
 
     public function __construct()
     {
@@ -62,6 +74,32 @@ class Course
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile($imageFile): self
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }
