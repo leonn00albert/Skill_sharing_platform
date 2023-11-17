@@ -72,4 +72,59 @@ public function new(Request $request,EntityManagerInterface $entityManager)
 
         return $this->redirectToRoute('section_view',['id' => $id]);
     }
+    #[Route('teacher/sections', name: 'manage_sections')]
+
+    public function manageSections(): Response
+    {   
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+        $courses = $user->getCourses();
+
+        return $this->render('teacher/manage_sections.html.twig', [
+            'courses' => $courses
+        ]);
+    }
+
+    public function edit(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $section = $entityManager->getRepository(Section::class)->find($id);
+
+        if (!$section) {
+            throw $this->createNotFoundException('Course not found');
+        }
+
+        $form = $this->createForm(SectionType::class, $section);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Section updated successfully.');
+
+            return $this->redirectToRoute('teacher_courses');
+        }
+
+        return $this->render('/section/edit.html.twig', [
+            'form' => $form->createView(),
+            'section' => $section,
+        ]);
+    }
+
+    public function delete($id , EntityManagerInterface $entityManager): Response
+    {
+        $section = $entityManager->getRepository(Section::class)->find($id);
+
+        if (!$section) {
+            throw $this->createNotFoundException('Section not found');
+        }
+        $entityManager->remove($section);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Section deleted successfully.');
+
+        return $this->redirectToRoute('manage_sections');
+    }
 }

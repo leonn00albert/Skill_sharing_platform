@@ -209,7 +209,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->completedSections;
     }
-
+    /**
+     * @return Collection<int, CompletedSections>
+     */
+    public function getSections(): Collection
+    {
+        $sections = new ArrayCollection();
+        foreach ($this->getCourses() as $course) {
+            $sections->add($course->getSections());
+        }
+        return $sections;
+    }
     public function addCompletedSection(CompletedSections $completedSection): static
     {
         if (!$this->completedSections->contains($completedSection)) {

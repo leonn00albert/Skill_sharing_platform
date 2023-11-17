@@ -1,0 +1,25 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}!{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ asset('semantic/dist/semantic.min.css') }}">
+</head>
+<body>
+
+<div class="ui container">
+    <h1 class="ui header">{{ title }}</h1>
+    <p>Welcome to the MakerShare website!</p>
+</div>
+
+<script src="{{ asset('semantic/dist/semantic.min.js') }}"></script>
+</body>
+</html>
+{% endblock %}

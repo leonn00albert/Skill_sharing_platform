@@ -33,3 +33,11 @@ edit_course:
 delete_course:
     path: '/teacher/course/{id}/delete'
     controller: 'App\Controller\CourseController::delete'
+
+edit_section:
+    path: '/teacher/section/{id}/edit'
+    controller: 'App\Controller\SectionController::edit'
+    
+delete_section:
+    path: '/teacher/section/{id}/delete'
+    controller: 'App\Controller\SectionController::delete'

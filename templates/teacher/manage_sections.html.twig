@@ -1,0 +1,45 @@
+{# templates/section/manage_sections.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Sections{% endblock %}
+
+{% block body %}
+    <h1>Manage Sections</h1>
+
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if courses is not empty %}
+                {% for course in courses %}
+                <tr>
+                    <td>
+                        {{ course.title }}
+                    </td>
+                </tr>
+                      
+                    {% for section in course.sections %}
+                    <tr>
+                        <td>{{ section.id }}</td>
+                        <td>{{ section.title }}</td>
+                        <td>
+                            <a href="{{ path('edit_section', {'id': section.id}) }}" class="ui yellow button">Edit</a>
+                            <a href="{{ path('delete_section', {'id': section.id}) }}" class="ui red button">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('section_new') }}" class="ui primary button">Add Section</a>
+{% endblock %}

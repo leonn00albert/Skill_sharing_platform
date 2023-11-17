@@ -19,8 +19,7 @@ security:
             entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                target: homepage
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

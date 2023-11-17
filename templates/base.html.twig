@@ -1,109 +1,131 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        {% block stylesheets %}
-        {% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
-            <style type="text/css">
-      body {
-        -webkit-font-smoothing: antialiased;
-        -moz-font-smoothing: grayscale;
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+    integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+    integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {% block stylesheets %}
+  {% endblock %}
+
+  {% block javascripts %}
+  {% endblock %}
+  <style type="text/css">
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-font-smoothing: grayscale;
+    }
+
+    footer {
+      padding-bottom: 2rem;
+    }
+
+    @media only screen and (min-width: 768px) {
+      .ui.container {
+        width: 730px;
+        max-width: 730px;
       }
+    }
 
-      footer {
-        padding-bottom: 2rem;
-      }
+    .ui.container>.ui.menu {
+      border-width: 0 0 1px 0;
+      border-radius: 0;
+      height: 6rem;
+      box-shadow: none;
+      margin-bottom: 28px;
+    }
 
-      @media only screen and (min-width: 768px) {
-        .ui.container {
-          width: 730px;
-          max-width: 730px;
-        }
-      }
+    .ui.container>.ui.menu .header.item {
+      padding-left: 0;
+      font-size: 1.6rem;
+      color: #777777;
+    }
 
-      .ui.container > .ui.menu {
-        border-width: 0 0 1px 0;
-        border-radius: 0;
-        height: 6rem;
-        box-shadow: none;
-        margin-bottom: 28px;
-      }
+    .ui.container .right.menu .item {
+      color: #337ab7;
+      padding: 0.8em 0.6em;
+      margin: 1.6em 0.2em;
+      background: none;
+      transition: color 0.1s ease;
+      border-radius: 0.28571429rem;
+      font-size: 14px;
+    }
 
-      .ui.container > .ui.menu .header.item {
-        padding-left: 0;
-        font-size: 1.6rem;
-        color: #777777;
-      }
+    .ui.container .right.menu .item.active {
+      background-color: #337ab7;
+      color: white;
+    }
 
-      .ui.container .right.menu .item {
-        color: #337ab7;
-        padding: 0.8em 0.6em;
-        margin: 1.6em 0.2em;
-        background: none;
-        transition: color 0.1s ease;
-        border-radius: 0.28571429rem;
-        font-size: 14px;
-      }
+    .ui.container>.ui.message {
+      background-color: rgb(238, 238, 238);
+      box-shadow: none;
+      padding: 4rem 2rem;
+    }
 
-      .ui.container .right.menu .item.active {
-        background-color: #337ab7;
-        color: white;
-      }
+    .ui.container h1.ui.header {
+      font-size: 2.5rem;
+      text-align: center;
+    }
 
-      .ui.container > .ui.message {
-        background-color: rgb(238, 238, 238);
-        box-shadow: none;
-        padding: 4rem 2rem;
-      }
-
+    @media only screen and (min-width: 768px) {
       .ui.container h1.ui.header {
-        font-size: 2.5rem;
-        text-align: center;
+        font-size: 4.5rem;
       }
+    }
 
-      @media only screen and (min-width: 768px) {
-        .ui.container h1.ui.header {
-          font-size: 4.5rem;
-        }
-      }
+    .ui.container p.lead {
+      font-size: 1.5rem;
+      color: #333333;
+      line-height: 1.4;
+      font-weight: 300;
+    }
 
-      .ui.container p.lead {
-        font-size: 1.5rem;
-        color: #333333;
-        line-height: 1.4;
-        font-weight: 300;
-      }
+    .ui.container .ui.grid .row {
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
 
-      .ui.container .ui.grid .row {
-        margin-bottom: 1.5rem;
-      }
-    </style>
-    </head>
-    <body>
-    <div class="ui container">
-      <div class="ui borderless massive menu">
-        <a class="header item">CourseShare</a>
-        <div class="right menu">
-          <a class="active item">Home</a> <a class="item">About</a>
-                  <a href="{{ path('course_list') }}" class="item">Courses</a>
-                {% if is_granted('ROLE_USER') %}
-                    {% if 'ROLE_STUDENT' in app.user.roles %}
-                        <a href="{{ path('enrollments') }}" class="item">Enrollments</a>
-                    {% elseif 'ROLE_TEACHER' in app.user.roles %}
-                        <a href="{{ path('teacher_courses') }}" class="item">Manage Courses</a>
-                    {% endif %}
-              {% endif %}
-        </div>
+<body>
+  <div class="ui container">
+    <div class="ui borderless massive menu">
+      <a href="{{ path('homepage') }}"
+        class="header item {% if app.request.attributes.get('_route') == 'homepage' %}active{% endif %}">MakerShare</a>
+      <div class="right menu">
+        <a href="{{ path('homepage') }}"
+          class="item {% if app.request.attributes.get('_route') == 'homepage' %}active{% endif %}">Home</a>
+        <a href="{{ path('course_list') }}"
+          class="item {% if app.request.attributes.get('_route') == 'course_list' %}active{% endif %}">Courses</a>
+
+        {% if is_granted('ROLE_USER') %}
+        {% if 'ROLE_STUDENT' in app.user.roles %}
+        <a href="{{ path('student_enrollments') }}"
+          class="item {% if app.request.attributes.get('_route') == 'student_enrollments' %}active{% endif %}">Enrollments</a>
+        {% elseif 'ROLE_TEACHER' in app.user.roles %}
+        <a href="{{ path('teacher_courses') }}"
+          class="item {% if app.request.attributes.get('_route') == 'teacher_courses' %}active{% endif %}">Manage
+          Courses</a>
+        {% endif %}
+        <a href="{{ path('app_logout') }}" class="item">Logout</a>
+        {% else %}
+        <a href="{{ path('app_login') }}"
+          class="item {% if app.request.attributes.get('_route') == 'app_login' %}active{% endif %}">Login</a>
+        <a href="{{ path('app_register') }}"
+          class="item {% if app.request.attributes.get('_route') == 'app_register' %}active{% endif %}">Register</a>
+        {% endif %}
       </div>
-          {% block body %}{% endblock %}
+    </div>
 
-</div>
-    </body>
+    {% block body %}{% endblock %}
+
+  </div>
+</body>
+
 </html>

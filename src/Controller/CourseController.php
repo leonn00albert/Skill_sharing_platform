@@ -55,7 +55,7 @@ class CourseController extends AbstractController
 
             $this->addFlash('success', 'Course created successfully');
 
-            return $this->redirectToRoute('/teacher/courses');
+            return $this->redirectToRoute('teacher_courses');
         }
 
         return $this->render('course/new.html.twig', [

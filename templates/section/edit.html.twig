@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Section -
+	{{ section.title }}
+{% endblock %}
+
+{% block body %}
+	<h1>Update Section -
+		{{ section.title }}</h1>
+
+	<div class="">
+		<a href="{{ path('manage_sections') }}" class="ui primary button  m-3">Back</a>
+	</div>
+	<div class="ui form">
+		{{ form_start(form) }}
+
+		<div class="field">
+			{{ form_label(form.title) }}
+			{{ form_widget(form.title, {'attr': {'class': 'ui input', 'placeholder': 'Enter Title'}}) }}
+		</div>
+
+		<div class="field">
+			{{ form_label(form.content) }}
+			{{ form_widget(form.content, {'attr': {'class': 'ui input', 'placeholder': 'Enter Content'}}) }}
+		</div>
+
+		<div class="field">
+			{{ form_label(form.course) }}
+			{{ form_widget(form.course, {'attr': {'class': 'ui dropdown', 'placeholder': 'Select Course'}}) }}
+		</div>
+
+		<button type="submit" class="ui primary button">Update</button>
+
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
+
