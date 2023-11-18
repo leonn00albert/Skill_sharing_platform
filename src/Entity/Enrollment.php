@@ -111,7 +111,6 @@ class Enrollment
         $courseSections = $this->course->getSections();
         $student = $this->getStudent();
         $completedCount = 0;
-        return count($courseSections);  
         foreach ($courseSections as $section) {
             if ($student->hasCompleted($section)) {
                 $completedCount++;

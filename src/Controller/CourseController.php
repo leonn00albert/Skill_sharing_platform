@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CourseController extends AbstractController
 {
+
+    
     #[Route('/course', name: 'app_course')]
     public function index(): Response
     {
@@ -89,6 +91,7 @@ class CourseController extends AbstractController
         return $this->render('course/view.html.twig', [
             'course' => $course,
             'sections' => $sections,
+            'enrollment' => $course->getStudentEnrollment($this->getUser()),
         ]);
     }
 

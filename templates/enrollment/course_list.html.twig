@@ -1,25 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}List of Courses{% endblock %}
+{% block title %}List of Courses
+{% endblock %}
 
 {% block body %}
-    <h1 class="ui header">List of Courses</h1>
-    
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p class="ui message">Welcome, {{ app.user.email }}!</p>
-    {% endif %}
-    
-    {% for course in courses %}
-        <div class="ui segment">
-            <h2 class="ui header">{{ course.title }}</h2>
-            <p>{{ course.description }}</p>
-            
-            {% if app.user.isEnrolled(course) %}
-                <p class="ui positive message">You are already enrolled in this course.</p>
-            {% else %}
-                <a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
-            {% endif %}
-        </div>
-        <div class="ui divider"></div>
-    {% endfor %}
+	<h1 class="ui header">List of Courses</h1>
+
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<p class="ui message">Welcome,
+			{{ app.user.email }}!</p>
+	{% endif %}
+
+	<div class="ui divided items">
+		{% for course in courses %}
+			<div class="item">
+				<div class="image">
+					{% if course.getimage is defined %}
+						<img class="image" src="{{ asset('uploads/courses/' ~ course.image) }}" alt="{{ course.title }} Image">
+					{% endif %}
+				</div>
+				<div class="content">
+					<a class="header">{{course.title}}</a>
+					<div class="meta"></div>
+					<div class="description">
+						<p>{{ course.description }}</p>
+					</div>
+					<div class="extra content">
+						{% if is_granted('ROLE_USER') %}
+
+							{% if app.user.isEnrolled(course) %}
+								<p class="ui positive message">You are already enrolled in this course.</p>
+							{% else %}
+								<a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
+							{% endif %}
+						{% else %}
+							<a href="{{ path('app_login') }}">
+								<strong>Login to enroll</strong>
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+
 {% endblock %}
