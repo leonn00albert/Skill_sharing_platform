@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - php
+      - database
+
+  php:
+    image: php:7.4-fpm
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - APP_SECRET=6a1f23dced270134b59d13f093b7ede9
+    depends_on:
+      - database
+
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: makershare
+      MYSQL_USER: makershare_user
+      MYSQL_PASSWORD: ''
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
