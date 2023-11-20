@@ -6,7 +6,7 @@
     <h1>{{ section.title }}</h1>
     <p>{{ section.content }}</p>
     {% if app.user.hasCompleted(section) %}
-        <p>You have completed this section</p>
+        <p><strong>You have completed this section</strong></p>
     {% else %}
                 <a href="{{ path('complete_section', {'id': section.id}) }}" class="btn btn-primary">Complete</a>
      {% endif %}

@@ -160,7 +160,24 @@ class Course
     {
         return $this->enrollments;
     }
-
+    /**
+     * @return Collection<int, Enrollment>
+     */
+    public function getStudentEnrollment(?User $student)
+    {   
+        $enrollments = $this->enrollments;
+    
+        $filteredEnrollments = array_filter($enrollments->toArray(), function ($enrollment) use ($student) {
+            return $enrollment->getStudent() === $student;
+        });
+    
+        if (!empty($filteredEnrollments)) {
+            return reset($filteredEnrollments);
+        } else {
+            return null;
+        }
+    }
+    
     public function addEnrollment(Enrollment $enrollment): static
     {
         if (!$this->enrollments->contains($enrollment)) {

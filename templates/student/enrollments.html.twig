@@ -3,41 +3,49 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Your Enrollments</h1>
+	<h1>Your Enrollments</h1>
 
-    {% if enrollments is not empty %}
-        <div class="ui cards">
-            {% for enrollment in enrollments %}
-                <div class="card">
-                    <div class="content">
-                        <div class="header">{{ enrollment.course.title }}</div>
-                        <div class="meta">
-                            {% if enrollment.completed_enrollment %}
-                                <span class="ui green label">Completed</span>
-                            {% else %}
-                                <span class="ui blue label">In Progress</span>
-                            {% endif %}
-                        </div>
-                        <div class="description">
-                            <p>Progress: {{ enrollment.getProgress }}% ({{ enrollment.completed_sections_count }} / {{ enrollment.sections_count }})</p>
-                            {% if enrollment.completed_enrollment %}
-                                <p>You have completed this course</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="extra content">
-                        <a href="{{ path('course_view', {'id': enrollment.course.id}) }}" class="ui primary button">
-                            {% if enrollment.completed_enrollment %}
-                                Review
-                            {% else %}
-                                Continue
-                            {% endif %}
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No enrollments found.</p>
-    {% endif %}
-{% endblock %}
+	{% if enrollments is not empty %}
+		<div class="ui divided items">
+			{% for enrollment in enrollments %}
+				<div class="item">
+					<div class="image">
+						{% if enrollment.course.getimage is defined %}
+							<img class="image" src="{{ asset('uploads/courses/' ~ enrollment.course.image) }}" alt="{{ enrollment.course.title }} Image">
+						{% endif %}
+					</div>
+					<div class="content">
+						<a class="header">{{enrollment.course.title}}</a>
+						<div class="meta">
+							{% if enrollment.completed_enrollment %}
+								<span class="ui green label">Completed</span>
+							{% else %}
+								<span class="ui blue label">In Progress</span>
+							{% endif %}
+						</div>
+						<div class="description">
+							<p>Progress:
+								{{ enrollment.getProgress }}% ({{ enrollment.completed_sections_count }}
+								/
+								{{ enrollment.sections_count }})</p>
+							{% if enrollment.completed_enrollment %}
+								<p>You have completed this course</p>
+							{% endif %}
+						</div>
+						<div class="extra content">
+							<a href="{{ path('course_view', {'id': enrollment.course.id}) }}" class="ui primary button">
+								{% if enrollment.completed_enrollment %}
+									Review
+								{% else %}
+									Continue
+								{% endif %}
+							</a>
+						</div>
+					</div>
+				</div>
+		{% endfor %}
+	</div>
+{% else %}
+	<p>No enrollments found.</p>
+{% endif %}{% endblock %}
+

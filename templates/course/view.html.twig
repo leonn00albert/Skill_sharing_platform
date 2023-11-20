@@ -1,30 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ course.title }}{% endblock %}
+{% block title %}
+	{{ course.title }}
+{% endblock %}
 
 {% block body %}
-    <h1 class="ui header">{{ course.title }}</h1>
-    <p>{{ course.description }}</p>
-    
-    {% if app.user.isEnrolled(course) %}
-        <h2 class="ui header">Sections</h2>
-        <div class="ui feed">
-            {% if sections is not empty %}
-                {% for section in sections %}
-                    <div class="event">
-                        <div class="content">
-                            <div class="summary">
-                                {{ section.title }}
-                                <a href="{{ path('section_view', {'id': section.id}) }}" class="ui primary button">View</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No Sections found.</p>
-            {% endif %}
-        </div>
-    {% else %}
-        <a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
-    {% endif %}
+	<h1 class="ui header">{{ course.title }}</h1>
+	<p class="center aligned" style="text-align: center">{{ course.description }}</p>
+
+	{% if app.user.isEnrolled(course) %}
+		{% if enrollment is defined %}
+			<div class="ui progress teal" data-value={{enrollment.completed_sections_count}} data-total={{enrollment.sections_count}} id="course_progress">
+				<div class="bar">
+					<div class="progress"></div>
+				</div>
+				<div class="label">Progress</div>
+			</div>
+		{% endif %}
+
+		<h2 class="ui header">Learning Path</h2>
+		<div class="ui cards">
+			{% if sections is not empty %}
+				{% for section in sections %}
+					<div class="card">
+						<div class="content">
+							<div class="header">{{ section.title }}</div>
+						</div>
+
+						<div class="extra content">
+
+							<a href="{{ path('section_view', {'id': section.id}) }}" class="ui primary button">View</a>
+							{% if app.user.hasCompleted(section) %}
+								<a class="ui label">Completed</a>
+							{% endif %}
+
+
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<p>No Sections found.</p>
+			{% endif %}
+		</div>
+	{% else %}
+		<a href="{{ path('enroll_course', {'courseId': course.id}) }}" class="ui primary button">Enroll</a>
+	{% endif %}
+
+	<script>
+		$('#course_progress').progress();
+	</script>
+
 {% endblock %}
+
