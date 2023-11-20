@@ -4,35 +4,31 @@
 namespace App\Tests\Acceptance;
 
 use App\Tests\AcceptanceTester;
-use Codeception\Lib\Interfaces\DependsOnModule;
 
-class RegisterCest
+class LoginCest
 {
     public function _before(AcceptanceTester $I)
     {
+        $I->amOnPage('/register'); 
+        
+        $I->fillField('//input[@id="registration_form_email"]', 'teacher@acceptiontest.com');
+        $I->selectOption('//select[@id="registration_form_roles"]', 'ROLE_TEACHER');
+        
+        $I->fillField('//input[@id="registration_form_plainPassword"]', 'password123');
+        
+        $I->click('button[type="submit"]');
     }
 
     // tests
     public function tryToTest(AcceptanceTester $I)
     {
+        $I->wantTo('Log in');
 
-
-        $I->wantTo('Register a new user');
-
-        $I->amOnPage('/register');
-
-        $I->fillField('//input[@id="registration_form_email"]', 'teacher@acceptiontest.com');
-        $I->selectOption('//select[@id="registration_form_roles"]', 'ROLE_TEACHER');
-
-        $I->fillField('//input[@id="registration_form_plainPassword"]', 'password123');
-
+        $I->amOnPage('/login');
+        $I->fillField('#username', 'teacher@acceptiontest.com');
+        $I->fillField('#password', 'password123');
         $I->click('button[type="submit"]');
+        $I->seeCurrentUrlEquals('/courses');
     }
-    public function _after(AcceptanceTester $I)
-    {
-        $I->amOnPage('/test/clean/user');
-
-        $I->seeResponseCodeIs(200);
-        $I->see('User deleted successfully.');
-    }
+    
 }
